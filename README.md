@@ -1,5 +1,23 @@
 # convert-xml 
 
+### Setup
+
+1. Create folder `data/`
+2. The input file must be placed in data folder **and** be named file.txt **or** inputed as an argument
+
+### Instructions
+
+The executable file can be run with
+
+```bash
+java -jar file-name
+```
+
+The converter will always output as `converted.xml` and place it in `data/` folder.
+
+
+### File formats
+
 Converting this file format to XML:
 
 ```

@@ -18,26 +18,25 @@ public class ToXML {
 	Boolean isFActive;
 
 	public static void main(String args[]) {
-        try {                    	
-        	new ToXML().doit(
-        			args.length < 1 ? "file" : args[0],
-					args.length < 2 ? "converted" : args[1]
-        					);       
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-	}
+		new ToXML().doit();
+	}   
 
-	public void doit(String input, String output) {
+	public void doit() {
 		try {
-			in = new BufferedReader(new FileReader("data/" + input + ".txt"));
-			out = new StreamResult("data/" + output + ".xml");
+			in = new BufferedReader(new FileReader("data/file.txt"));
+			out = new StreamResult("data/converted.xml");
 			initXML();
 			String str;
 			isPActive = false;
 			isFActive = false;
-			while ((str = in.readLine()) != null) {
-				processLine(str);
+			Boolean lineProcessed = true;
+			String lastLine = "";
+			while ((str = in.readLine()) != null && lineProcessed) {
+				lastLine = str;
+				lineProcessed = processLine(str);
+			}
+			if (!lineProcessed) {
+				throw new WrongFormatException("Missing starting letter used for XML formatting " + lastLine);
 			}
 			th.endElement("", "", "person");
 			in.close();
@@ -64,10 +63,10 @@ public class ToXML {
 		th.startElement("", "", "people", atts);
 	}
 
-	public void processLine(String s) throws SAXException {
+	public boolean processLine(String s) throws SAXException {
 		String[] elements = s.split("\\|");
 		String startingLetter = elements[0];
-		
+		Boolean toReturn = true;
 		switch(startingLetter) {
 		  case "P":
 			  processP(elements);
@@ -82,9 +81,10 @@ public class ToXML {
 			  processF(elements);
 			  break;
 		  default:
-			  System.out.println("Missing starting letter used for file formatting");
+			  toReturn = false;
 			  break;
 		}
+		return toReturn;
 	}
 	
 	public void processP(String[] elements) throws SAXException {
