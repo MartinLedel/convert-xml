@@ -38,6 +38,9 @@ public class ToXML {
 			if (!lineProcessed) {
 				throw new WrongFormatException("Missing starting letter used for XML formatting " + lastLine);
 			}
+			if(isFActive) {
+				th.endElement("", "", "family");
+			}
 			th.endElement("", "", "person");
 			in.close();
 			closeXML();
@@ -94,9 +97,6 @@ public class ToXML {
 			isFActive = false;
 		} else if (isPActive) {
 			th.endElement("", "", "person");
-		} else if (isFActive) {
-			th.endElement("", "", "family");
-			isFActive = false;
 		}
 		atts.clear();
 		th.startElement("", "", "person", atts);

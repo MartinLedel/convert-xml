@@ -3,7 +3,7 @@
 ### Setup
 
 1. Create folder `data/`
-2. The input file must be placed in data folder **and** be named file.txt **or** inputed as an argument
+2. The input file must be placed in data folder **and** be named file.txt
 
 ### Instructions
 
